@@ -1,0 +1,15 @@
+namespace Domain.Entities;
+
+public class Game
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public double Rating { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
+    public int CategoryId { get; set; }
+
+    public Category? Category { get; set; }
+    public ICollection<OwnedGame> OwnedGames { get; set; } = new List<OwnedGame>();
+}
