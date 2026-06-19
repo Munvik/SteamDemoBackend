@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: steamstore-postgres
+    environment:
+      POSTGRES_DB: SteamStoreDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - steamstore-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d SteamStoreDb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    container_name: steamstore-api
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=SteamStoreDb;Username=postgres;Password=postgres
+    ports:
+      - "5000:5000"
+
+volumes:
+  steamstore-postgres-data:
