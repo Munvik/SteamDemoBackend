@@ -20,9 +20,7 @@ services:
 
   api:
     container_name: steamstore-api
-    build:
-      context: .
-      dockerfile: API/Dockerfile
+    image: ghcr.io/munvik/steamdemobackend:latest
     depends_on:
         postgres:
           condition: service_healthy
@@ -31,7 +29,7 @@ services:
         ConnectionStrings__DefaultConnection: "Host=postgres;Database=SteamStoreDb;Username=postgres;Password=postgres"
         ASPNETCORE_URLS: http://+:5000
     ports:
-      - "5000:5000"
+      - "5001:5000"
 
 volumes:
   steamstore-postgres-data:      
