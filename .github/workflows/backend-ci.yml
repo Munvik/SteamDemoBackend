@@ -1,4 +1,9 @@
 name: Backend CI
+
+permissions:
+  contents: read
+  packages: write
+
 on:
   push:
     branches:
@@ -30,8 +35,18 @@ jobs:
       - name: Docker Version
         run: docker --version
 
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Docker Build
-        run: docker build -f API/Dockerfile -t steamdemo-api .
+        run: docker build -f API/Dockerfile -t ghcr.io/munvik/steamdemobackend:latest .
+
+      - name: Push to GHCR
+        run: docker push ghcr.io/munvik/steamdemobackend:latest
 
       - name: Docker Images view
         run: docker images
