@@ -26,3 +26,12 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --configuration Release
+
+      - name: Docker Version
+        run: docker --version
+
+      - name: Docker Build
+        run: docker build -f API/Dockerfile -t steamdemo-api .
+
+      - name: Docker Images view
+        run: docker images
