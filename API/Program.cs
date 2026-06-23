@@ -31,9 +31,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-Console.WriteLine(
-    builder.Configuration.GetConnectionString("DefaultConnection"));
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
