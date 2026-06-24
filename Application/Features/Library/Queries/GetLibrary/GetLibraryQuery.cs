@@ -24,6 +24,7 @@ public class GetLibraryQueryHandler : IRequestHandler<GetLibraryQuery, IReadOnly
                 x.GameId,
                 x.Game?.Title ?? string.Empty,
                 x.Game?.Price ?? 0,
+                x.Game?.Rating ?? 0,
                 x.PurchasedAt,
                 x.Status,
                 x.Game?.Category?.Name ?? string.Empty,
